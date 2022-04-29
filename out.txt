@@ -1,25 +1,7 @@
-
------ Sequências iniciais -----
-a - tamanho: 8
-AGCACACA
-b - tamanho: 8
-ACACACTA
-
------ Matriz -----
-0 0 0 0 0 0 0 0 0 
-0 2 1 2 1 2 1 0 2 
-0 1 1 1 1 1 1 0 1 
-0 0 3 2 3 2 3 2 1 
-0 2 2 5 4 5 4 3 4 
-0 1 4 4 7 6 7 6 5 
-0 2 3 6 6 9 8 7 8 
-0 1 4 5 8 8 11 10 9 
-0 2 3 6 7 10 10 10 12 
+--- valor maximo ---
+12
 
 ----- Reconstrução do alinhamento -----
 a: AGCACAC_A
 b: A_CACACTA
-
------ Score -----
-max_score: 12
 
