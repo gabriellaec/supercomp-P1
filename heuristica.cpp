@@ -27,8 +27,7 @@ struct resultado {
 
 int w(string a, string b);
 item find_max(int diagonal, int delecao, int insercao);
-int smith_waterman(vector<string> a, vector<string> b, int n, int m);
-resultado retorna_matriz(vector<string> a, vector<string> b, int n, int m);
+resultado smith_waterman_results(vector<string> a, vector<string> b, int n, int m);
 
 
 int main() {
@@ -51,7 +50,7 @@ int main() {
         b.push_back({base[i]});
     }
 
-    resultado result =retorna_matriz(a,b,n,m);
+    resultado result =smith_waterman_results(a,b,n,m);
 
     cout << "--- valor maximo ---" << endl;
     cout << result.valor << endl;
@@ -113,7 +112,7 @@ item find_max(int diagonal, int delecao, int insercao){
 
 
 
-resultado retorna_matriz(vector<string> a, vector<string> b, int n, int m){
+resultado smith_waterman_results(vector<string> a, vector<string> b, int n, int m){
     vector<vector<item>> H;
     int maximo_H = 0; int max_val_i = 0; int max_val_j = 0;
 
@@ -176,63 +175,6 @@ resultado retorna_matriz(vector<string> a, vector<string> b, int n, int m){
     reverse(match_seq_b.begin(),match_seq_b.end());
     
     return {maximo_H, match_seq_a, match_seq_b};
-}
-
-item max_matrix(vector<vector<item>> H, int n, int m){
-    int maximo_H = 0; int max_val_i = 0; int max_val_j = 0;
-    for (int i=1; i<=n; i++){
-        for (int j=1; j<=m; j++){
-            if (H[i][j].valor > maximo_H) {
-                    maximo_H=H[i][j].valor;
-                    max_val_i=i;
-                    max_val_j=j;
-            }
-        }
-    }
-
-    return {maximo_H,max_val_i,max_val_j};
-}
-
-vector<vector<string>> reconstrucao(vector<vector<item>> H, item max_val, vector<string> a, vector<string> b, int n, int m){
-    vector<string> match_seq_a;
-    vector<string> match_seq_b;
-
-    int i=max_val.salto_i; int j=max_val.salto_j;
-
-
-    // Reconstruindo o caminho a partir dos saltos do struct
-    while ( (i>0 && j>0)  && (!(H[i][j].salto_j==0 && H[i][j].salto_i==0)) ) {
-        int pos_i=i;
-        int pos_j=j;
-        if (H[i][j].valor == 0) break; // célula da matriz com valor zero
-
-        if (H[pos_i][pos_j].salto_i==0 && H[pos_i][pos_j].salto_j ==1){
-            match_seq_a.push_back("_");
-            match_seq_b.push_back(b[j-1]);
-        }
-        else if (H[pos_i][pos_j].salto_i==1 && H[pos_i][pos_j].salto_j ==0){
-            match_seq_a.push_back(a[i-1]);
-            match_seq_b.push_back("_");
-        }
-        else{
-            match_seq_a.push_back(a[i-1]);
-            match_seq_b.push_back(b[j-1]);
-        }
-        
-        
-        i= i- H[pos_i][pos_j].salto_i;
-        j=j- H[pos_i][pos_j].salto_j;                
-    }
-
-    // Invertendo sequências
-    reverse(match_seq_a.begin(),match_seq_a.end());
-    reverse(match_seq_b.begin(),match_seq_b.end());
-
-    vector<vector<string>> ret_seqs;
-    ret_seqs.push_back(match_seq_a);
-    ret_seqs.push_back(match_seq_b);
-
-    return ret_seqs;
 }
 
 
